@@ -4,11 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const VerifyTokenMiddleware = require('./middleware/authToken');
+
 var userLogin = require('./routes/userLogin');
 var userSignup = require('./routes/userSignup');
 var forgotPassword = require('./routes/forgotPassword');
-var verifyCode = require('./routes/verifyCode');
-var resetPassword = require('./routes/resetPassword');
+var changePassword = require('./routes/changePassword');
+var getFavourites = require('./routes/getFavourites');
+var getRestaurantsAndCategories = require('./routes/getRestaurantsAndCategories');
+var addFavouriteItem = require('./routes/addFavouriteItem');
+var deleteFavouriteItem = require('./routes/deleteFavouriteItem');
+var getRestaurantsByCategories = require('./routes/getRestaurantsByCategories');
+var getRestaurantMenu = require('./routes/getRestaurantMenu');
+var getFoodItemsByCategories = require('./routes/getFoodItemsByCategories');
+var getUserData = require('./routes/getUserData');
+var uploadImage = require('./routes/uploadImage');
 
 var app = express();
 
@@ -22,11 +32,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/userSignup', userSignup);
+app.use('/userSignup',  userSignup);
 app.use('/userLogin', userLogin);
 app.use('/forgotPassword', forgotPassword);
-app.use('/verifyCode', verifyCode);
-app.use('/resetPassword', resetPassword);
+app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
+app.use('/getRestaurantsAndCategories', VerifyTokenMiddleware.validateUser, getRestaurantsAndCategories);
+app.use('/getRestaurantsByCategories', VerifyTokenMiddleware.validateUser, getRestaurantsByCategories);
+app.use('/getRestaurantMenu', VerifyTokenMiddleware.validateUser, getRestaurantMenu);
+app.use('/getFavourites', VerifyTokenMiddleware.validateUser, getFavourites);
+app.use('/addFavouriteItem', VerifyTokenMiddleware.validateUser, addFavouriteItem);
+app.use('/deleteFavouriteItem', VerifyTokenMiddleware.validateUser, deleteFavouriteItem);
+app.use('/getFoodItemsByCategories', VerifyTokenMiddleware.validateUser, getFoodItemsByCategories);
+app.use('/getUserData', VerifyTokenMiddleware.validateUser, getUserData);
+app.use('/uploadImage', VerifyTokenMiddleware.validateUser, uploadImage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

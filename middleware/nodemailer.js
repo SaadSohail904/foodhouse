@@ -8,7 +8,7 @@ const oauth2Client = new OAuth2(
      "https://developers.google.com/oauthplayground" // Redirect URL
 );
 oauth2Client.setCredentials({
-     refresh_token: "1//04uyiykaF_sYpCgYIARAAGAQSNwF-L9IrfZA0iykLMX2WxSikGJkGizL5xRKgvOoy-QNyycm4nYCp8InHk7c9nwP6Ym7xgwhQQY4"
+     refresh_token: "1//04Xw-IeG7-leCCgYIARAAGAQSNwF-L9Irath7_4qfDqgYks9_iSFmFo1K30ndQQV7-m36SX9OCJO_BrKr_14vLYoZGStzlZ2Jaqw"
 });
 const accessToken = oauth2Client.getAccessToken()
 const smtpTransport = nodemailer.createTransport({
@@ -18,7 +18,7 @@ const smtpTransport = nodemailer.createTransport({
           user: "foodvhouse@gmail.com",
           clientId: "806628543447-ukj4frb8f628bbh1vts5euj4j0b34upf.apps.googleusercontent.com",
           clientSecret: "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",
-          refreshToken: "1//04uyiykaF_sYpCgYIARAAGAQSNwF-L9IrfZA0iykLMX2WxSikGJkGizL5xRKgvOoy-QNyycm4nYCp8InHk7c9nwP6Ym7xgwhQQY4",
+          refreshToken: "1//04Xw-IeG7-leCCgYIARAAGAQSNwF-L9Irath7_4qfDqgYks9_iSFmFo1K30ndQQV7-m36SX9OCJO_BrKr_14vLYoZGStzlZ2Jaqw",
           accessToken: accessToken
      }
 });

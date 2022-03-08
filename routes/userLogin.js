@@ -7,13 +7,12 @@ const functions = require('../middleware/functions');
 const pool = require("../db.js");
 
 
-const userSchema = Joi.object().keys({
+const validationSchema = Joi.object().keys({
   email: Joi.string().required(),
-  password: Joi.string().required(),
-  token: Joi.string().allow('')
+  password: Joi.string().required()
 });
 router.post('/', async function (req, res, next) {
-  let validated = await userSchema.validate(req.body, { abortEarly: false });
+  let validated = validationSchema.validate(req.body, { abortEarly: false });
   try {
     pool.getConnection(function(err, con) {
       if(err){
