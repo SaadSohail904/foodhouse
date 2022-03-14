@@ -24,10 +24,7 @@ router.post('/', async function (req, res, next) {
           if (!validated.error) {
             let user = await functions.runTransactionQuery(`SELECT * FROM user  WHERE email = "${req.body.email}" && emailverified = 1`, con)
             if (user.length) {
-              let token = crypto.randomBytes(32).toString('hex');
-              user[0].token = token;
-              var hash = bcrypt.compareSync(req.body.password, user[0].password);
-              if (hash == false) {
+              if (req.body.password != user[0].password){
                 res.send({ statusCode: 405, message: "Invalid credentials" })
               } else {
                 if(user[0].emailverified){
