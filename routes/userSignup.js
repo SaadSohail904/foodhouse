@@ -21,14 +21,14 @@ router.post('/', function (req, res) {
   			  email: Joi.string().email().required(),
   			  password: Joi.string().required(),
   			  gender: Joi.number().integer().required().valid(0, 1),
-  			  age: Joi.number().integer().required(),
+  			  // age: Joi.number().integer().required(),
   			});
   			let validation = validationSchema.validate(req.body, { abortEarly: false });
         if (!validation.error) {
-  				var age = req.body.age;
+  				// var age = req.body.age;
           let currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-          var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, emailverified, password, age, gender, email) values("${req.body.fname}", "${req.body.lname}", 1,
-          "${req.body.password}", ${age}, ${req.body.gender}, "${req.body.email}")`, con);
+          var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, emailverified, password, gender, email) values("${req.body.fname}", "${req.body.lname}", 1,
+          "${req.body.password}", ${req.body.gender}, "${req.body.email}")`, con);
         	con.commit();
   				res.send({statusCode: 200, message:"Signed up successfully"});
   			} else {
