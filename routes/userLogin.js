@@ -23,8 +23,7 @@ router.post('/', async function (req, res, next) {
       con.beginTransaction(async function () {
         try {
           if (!validated.error) {
-            let user = await functions.runTransactionQuery(`SELECT id, fname as first_name, lname as last_name,
-            mobileno as phone_number, email, emailverified as is_email_verified, password, dob, age, gender, created_at, updated_at, role FROM user  WHERE email = "${req.body.email}" && emailverified = 1`, con)
+            let user = await functions.runTransactionQuery(`SELECT id, fname as first_name, lname as last_name, email, emailverified as is_email_verified, password, dob, age, gender, created_at, updated_at, role FROM user  WHERE email = "${req.body.email}" && emailverified = 1`, con)
             if (user.length) {
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;

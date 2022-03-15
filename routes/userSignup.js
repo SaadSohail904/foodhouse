@@ -18,7 +18,6 @@ router.post('/', function (req, res) {
   			let validationSchema = Joi.object().keys({
   			  fname: Joi.string().required(),
   			  lname: Joi.string().required(),
-  			  mobileNo: Joi.string().required(),
   			  email: Joi.string().email().required(),
   			  password: Joi.string().required(),
   			  gender: Joi.number().integer().required().valid(0, 1),
@@ -28,7 +27,7 @@ router.post('/', function (req, res) {
         if (!validation.error) {
   				var age = req.body.age;
           let currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-          var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, emailverified, mobileno, password, age, gender, email) values("${req.body.fname}", "${req.body.lname}", 1, "${req.body.mobileNo}",
+          var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, emailverified, password, age, gender, email) values("${req.body.fname}", "${req.body.lname}", 1,
           "${req.body.password}", ${age}, ${req.body.gender}, "${req.body.email}")`, con);
         	con.commit();
   				res.send({statusCode: 200, message:"Signed up successfully"});
@@ -40,7 +39,7 @@ router.post('/', function (req, res) {
         con.rollback();
   			console.log("Error in signup:", err);
         if (err.code == 'ER_DUP_ENTRY') {
-          res.send({ statusCode: 405, message: 'Email/mobile No. already registered' });
+          res.send({ statusCode: 405, message: 'Email already registered' });
         } else {
           res.send({ statusCode: 405, message: err.message });
         }
