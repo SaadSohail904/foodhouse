@@ -12,6 +12,18 @@ router.get('/', async function (req, res, next) {
     let validated = validationSchema.validate(req.query);
     if(!validated.error){
         var foodItemsResults = await functions.runQuery(`Select * from food_items where restaurant_id = ${req.query.restaurant_id}`);
+        var favourites = await functions.runQuery(`Select * from favourites_user_food_mapper m inner join food_items f on m.food_item_id = f.id 
+        where m.user_id = ${req.query.user_id} && f.restaurant_id = ${req.query.restaurant_id}`)
+        for(let item of foodItemsResults){
+          let itemFound = false;
+          for(let favouriteItem of favourites){
+            if(favouriteItem.food_item_id == item.id){
+              itemFound = true;
+              break;
+            }
+          }
+          item.is_favourite = itemFound;
+        }
         res.send({ statusCode: 200, message: "Data retrieved", data: foodItemsResults} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
