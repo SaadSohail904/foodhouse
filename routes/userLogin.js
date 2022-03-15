@@ -28,7 +28,10 @@ router.post('/', async function (req, res, next) {
             if (user.length) {
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;
+              console.log(user[0].role)
+              console.log(roles[user[0].role])
               user[0].role = roles[user[0].role]
+              console.log(user[0].role)
               user[0].username = user[0].first_name + " " + user[0].last_name;
               if (req.body.password != user[0].password){
                 res.send({ statusCode: 405, message: "Invalid credentials" })
@@ -39,7 +42,6 @@ router.post('/', async function (req, res, next) {
                   await functions.runTransactionQuery(query, con);
                   con.commit();
                   console.log(`Logged in user ${user[0].id} at ${new Date}`);
-                  user[0].username = user[0].f_name
                   res.send({ statusCode: 200, user: user[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
                 } else{
                   con.rollback();
