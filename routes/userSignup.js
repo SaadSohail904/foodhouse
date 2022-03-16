@@ -26,6 +26,7 @@ router.post('/', function (req, res) {
   			let validation = validationSchema.validate(req.body, { abortEarly: false });
         if (!validation.error) {
   				// var age = req.body.age;
+          req.body.email = req.body.email.toLowerCase();
           let currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
           var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, emailverified, password, gender, email) values("${req.body.fname}", "${req.body.lname}", 1,
           "${req.body.password}", ${req.body.gender}, "${req.body.email}")`, con);

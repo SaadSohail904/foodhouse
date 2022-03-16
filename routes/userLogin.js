@@ -23,6 +23,7 @@ router.post('/', async function (req, res, next) {
       con.beginTransaction(async function () {
         try {
           if (!validated.error) {
+            req.body.email = req.body.email.toLowerCase();
             let user = await functions.runTransactionQuery(`SELECT id, fname as first_name, lname as last_name, email, emailverified as is_email_verified, password, dob, age, gender, created_at, updated_at, role FROM user  WHERE email = "${req.body.email}" && emailverified = 1`, con)
             if (user.length) {
               let token = crypto.randomBytes(32).toString('hex');
