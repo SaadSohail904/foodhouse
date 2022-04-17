@@ -6,7 +6,6 @@ exports.validateUser = async (req , res  , next)=>{
   
   try{
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")){
-      console.log("req.body", req.body)
       console.log("req.files", req.files)
       console.log("req.method", req.method)
       console.log("req.headers", req.headers)
@@ -21,8 +20,10 @@ exports.validateUser = async (req , res  , next)=>{
         if(tokenEndDate > currentDate){
           if(req.method=="POST"){
             req.body.user_id = queryResults[0].user_id;
+            console.log("req.body", req.body)
           } else if(req.method=="GET"){
             req.query.user_id = queryResults[0].user_id;
+            console.log("req.query", req.query)
           }
           next();
         } else {
