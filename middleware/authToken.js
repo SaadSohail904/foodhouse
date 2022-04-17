@@ -18,9 +18,11 @@ exports.validateUser = async (req , res  , next)=>{
         let currentDate = new Date();
         await currentDate.setMinutes(currentDate.getMinutes());
         if(tokenEndDate > currentDate){
-          req.body.user_id = queryResults[0].user_id;
-          req.query.user_id = queryResults[0].user_id;
-          console.log(req)
+          if(req.method=="POST"){
+            req.body.user_id = queryResults[0].user_id;
+          } else if(req.method=="GET"){
+            req.query.user_id = queryResults[0].user_id;
+          }
           next();
         } else {
           await functions.runQuery(`Delete from authtoken where id = ${queryResults[0].token_id}`);
