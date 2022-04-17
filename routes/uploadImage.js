@@ -48,7 +48,7 @@ router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
 
           let pathToSend = "/userImages";
           imageFiles['image'] = `${pathToSend}/${imageFiles['image']}`;
-          console.log(req)
+          console.log(req.body)
           // let validated = validationSchema.validate(req.body);
           // console.log(JSON.stringify(validated))
           if(!validated.error){
