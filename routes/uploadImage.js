@@ -49,11 +49,12 @@ router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
           let pathToSend = "/userImages";
           imageFiles['image'] = `${pathToSend}/${imageFiles['image']}`;
           console.log(req.body)
-          // let validated = validationSchema.validate(req.body);
-          // console.log(JSON.stringify(validated))
+          let validated = validationSchema.validate(req.body);
+          console.log(JSON.stringify(validated))
           if(!validated.error){
             imageFiles['image'] = imageFiles['image'].replace(/\\/g,"/");
             let query = `Update user set image = "${imageFiles['image']}" where id = ${req.body.user_id}`;
+            console.log(query)
             let queryResults = await functions.runQuery(query);
             res.send({statusCode: 200, message: "Image updated"});
           } else {
