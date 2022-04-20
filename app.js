@@ -19,6 +19,14 @@ var getRestaurantMenu = require('./routes/getRestaurantMenu');
 var getFoodItemsByCategories = require('./routes/getFoodItemsByCategories');
 var getUserData = require('./routes/getUserData');
 var uploadImage = require('./routes/uploadImage');
+var addToCart = require('./routes/addToCart');
+var createCart = require('./routes/createCart');
+var getCart = require('./routes/getCart');
+var removeFromCart = require('./routes/removeFromCart');
+var deleteCart = require('./routes/deleteCart');
+var updateCart = require('./routes/updateCart');
+var userLogout = require('./routes/userLogout');
+
 
 var app = express();
 
@@ -45,6 +53,13 @@ app.use('/deleteFavouriteItem', VerifyTokenMiddleware.validateUser, deleteFavour
 app.use('/getFoodItemsByCategories', VerifyTokenMiddleware.validateUser, getFoodItemsByCategories);
 app.use('/getUserData', VerifyTokenMiddleware.validateUser, getUserData);
 app.use('/uploadImage', VerifyTokenMiddleware.validateUser, uploadImage);
+app.use('/addToCart', VerifyTokenMiddleware.validateUser, addToCart);
+app.use('/createCart', VerifyTokenMiddleware.validateUser, createCart);
+app.use('/deleteCart', VerifyTokenMiddleware.validateUser, deleteCart);
+app.use('/getCart', VerifyTokenMiddleware.validateUser, getCart);
+app.use('/removeFromCart', VerifyTokenMiddleware.validateUser, removeFromCart);
+app.use('/updateCart', VerifyTokenMiddleware.validateUser, updateCart);
+app.use('/userLogout', VerifyTokenMiddleware.validateUser, userLogout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

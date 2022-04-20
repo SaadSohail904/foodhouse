@@ -4,24 +4,22 @@ const router = express.Router();
 const functions = require('../middleware/functions');
 
 const validationSchema = Joi.object().keys({
-    food_item_id: Joi.number().integer().required(), 
+    cart_id: Joi.number().integer().required(), 
+    food_item_id: Joi.number().integer().required(),
     user_id: Joi.number().integer().required()
 });
 router.post('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-        var insertionResults = await functions.runQuery(`Insert into favourites_user_food_mapper(user_id, food_item_id) values(${req.body.user_id}, ${req.body.food_item_id})`);
-        res.send({ statusCode: 200, message: "Added succesfully"} );
+        var insertionResults = await functions.runQuery(`Delete from cart_food_items_mapper where cart_id = ${req.body.cart_id} && food_item_id = ${req.body.food_item_id}`);
+        console.log(insertionResults)
+        res.send({ statusCode: 200, message: "Removed succesfully"} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
     }
   } catch(error) {
-    if(error.code=="ER_DUP_ENTRY"){
-      res.send({"statusCode": 405, "message": "You have already added that item to favourites"});
-    } else{
-      res.send({"statusCode": 405, "message": error.message});
-    }
+    res.send({"statusCode": 405, "message": error.message});
   }
 })
 

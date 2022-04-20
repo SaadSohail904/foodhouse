@@ -12,7 +12,7 @@ router.post('/', async function(req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-      let user = await functions.runQuery(`Select  id, password  from user  where email="${req.body.email}" && emailverified = 1`);
+      let user = await functions.runQuery(`Select  id, password  from user  where email="${req.body.email}"`);
       console.log(user)
       if(!user.length) {
         throw({statusCode: 405,
