@@ -6,13 +6,27 @@ const path = require('path');
 const functions = require('../middleware/functions');
 
 const validationSchema = Joi.object().keys({
-  email: Joi.string().required()
+    role: Joi.number().integer().required(),
+    email: Joi.string().required()
 })
 router.post('/', async function(req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-      let user = await functions.runQuery(`Select  id, password  from user  where email="${req.body.email}"`);
+      let user = [];
+      switch(parseInt(req.body.role)){
+        case 0: 
+          user = await functions.runQuery(`Select  id, password from customer where email="${req.body.email}"`);
+          break;
+        case 1:
+          user = await functions.runQuery(`Select  id, password from restaurant where email="${req.body.email}"`);
+          break;
+        case 2:
+          user = await functions.runQuery(`Select  id, password from admin where email="${req.body.email}"`);
+          break;
+        default:
+          break;
+      }
       console.log(user)
       if(!user.length) {
         throw({statusCode: 405,
@@ -33,7 +47,6 @@ router.post('/', async function(req, res, next) {
         Stay safe and have a good week!&nbsp;<br>
         <br>`
       };
-      console.log(mailOptions)
       await smtpTransport.sendMail(mailOptions);
       
       res.send({statusCode:200, message: `Email sent successfully`});

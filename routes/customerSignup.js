@@ -21,6 +21,7 @@ router.post('/', function (req, res) {
   			  email: Joi.string().email().required(),
   			  password: Joi.string().required(),
   			  gender: Joi.number().integer().required().valid(0, 1),
+          role: Joi.number().integer().required()
   			  // age: Joi.number().integer().required(),
   			});
   			let validation = validationSchema.validate(req.body, { abortEarly: false });
@@ -28,8 +29,9 @@ router.post('/', function (req, res) {
   				// var age = req.body.age;
           req.body.email = req.body.email.toLowerCase();
           let currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-          var queryResults = await functions.runTransactionQuery(`Insert into user(fname, lname, password, gender, email) values("${req.body.fname}", "${req.body.lname}",
-          "${req.body.password}", ${req.body.gender}, "${req.body.email}")`, con);
+          var userResults = await functions.runTransactionQuery(`Insert into user(role) values(0)`, con);
+          var queryResults = await functions.runTransactionQuery(`Insert into customer(fname, lname, password, gender, email, user_id) values("${req.body.fname}", "${req.body.lname}",
+          "${req.body.password}", ${req.body.gender}, "${req.body.email}", userResults.insertId)`, con);
         	con.commit();
   				res.send({statusCode: 200, message:"Signed up successfully"});
   			} else {

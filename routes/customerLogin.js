@@ -24,24 +24,27 @@ router.post('/', async function (req, res, next) {
         try {
           if (!validated.error) {
             req.body.email = req.body.email.toLowerCase();
-            let user = await functions.runTransactionQuery(`SELECT id, fname as first_name, lname as last_name, email, password, dob, age, gender, created_at, updated_at, role FROM user  WHERE email = "${req.body.email}"`, con)
-            if (user.length) {
+            let customer = await functions.runTransactionQuery(`SELECT customer.id as customer_id, fname as first_name, lname as last_name, email, password, dob, age, gender, created_at, updated_at, user_id, user.image FROM customer inner join
+            user on customer.user_id = user.id WHERE email = "${req.body.email}"`, con)
+            if (customer.length) {
+              let cartResults = await functions.runQuery(`Select * from cart where cart.customer_id = ${customer[0].customer_id}`);
+              if(cartResults.length){
+                customer[0].cart_id = cartResults[0].id;
+              }
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;
-              console.log(user[0].role)
-              console.log(roles[user[0].role])
-              user[0].role = roles[user[0].role]
-              console.log(user[0].role)
-              user[0].username = user[0].first_name + " " + user[0].last_name;
-              if (req.body.password != user[0].password){
+              customer[0].role = roles[0]
+              console.log(customer[0].role)
+              customer[0].fullname = customer[0].first_name + " " + customer[0].last_name;
+              if (req.body.password != customer[0].password){
                 res.send({ statusCode: 405, message: "Invalid credentials" })
               } else {
-                  let query = `Insert into authtoken (token , user_id, start_date, end_date) values("${token}" ,${user[0].id},
+                  let query = `Insert into authtoken (token , user_id, start_date, end_date) values("${token}" ,${customer[0].user_id},
                   CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP,  INTERVAL 7 DAY))`;
                   await functions.runTransactionQuery(query, con);
                   con.commit();
-                  console.log(`Logged in user ${user[0].id} at ${new Date}`);
-                  res.send({ statusCode: 200, user: user[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
+                  console.log(`Logged in customer ${customer[0].id} at ${new Date}`);
+                  res.send({ statusCode: 200, customer: customer[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
                 
               }
             } else {

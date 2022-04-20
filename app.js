@@ -6,8 +6,8 @@ var logger = require('morgan');
 
 const VerifyTokenMiddleware = require('./middleware/authToken');
 
-var userLogin = require('./routes/userLogin');
-var userSignup = require('./routes/userSignup');
+var customerLogin = require('./routes/customerLogin');
+var customerSignup = require('./routes/customerSignup');
 var forgotPassword = require('./routes/forgotPassword');
 var changePassword = require('./routes/changePassword');
 var getFavourites = require('./routes/getFavourites');
@@ -25,7 +25,7 @@ var getCart = require('./routes/getCart');
 var removeFromCart = require('./routes/removeFromCart');
 var deleteCart = require('./routes/deleteCart');
 var updateCart = require('./routes/updateCart');
-var userLogout = require('./routes/userLogout');
+var logout = require('./routes/logout');
 
 
 var app = express();
@@ -40,8 +40,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/userSignup',  userSignup);
-app.use('/userLogin', userLogin);
+app.use('/customerSignup',  customerSignup);
+app.use('/customerLogin', customerLogin);
 app.use('/forgotPassword', forgotPassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
 app.use('/getRestaurantsAndCategories', VerifyTokenMiddleware.validateUser, getRestaurantsAndCategories);
@@ -59,7 +59,7 @@ app.use('/deleteCart', VerifyTokenMiddleware.validateUser, deleteCart);
 app.use('/getCart', VerifyTokenMiddleware.validateUser, getCart);
 app.use('/removeFromCart', VerifyTokenMiddleware.validateUser, removeFromCart);
 app.use('/updateCart', VerifyTokenMiddleware.validateUser, updateCart);
-app.use('/userLogout', VerifyTokenMiddleware.validateUser, userLogout);
+app.use('/logout', VerifyTokenMiddleware.validateUser, logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

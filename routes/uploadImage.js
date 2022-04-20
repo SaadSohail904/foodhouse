@@ -40,7 +40,6 @@ const upload = multer({ //multer settings
 });
 const validationSchema = Joi.object().keys({
     user_id: Joi.number().integer().required()
-
   })
 router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
       try{

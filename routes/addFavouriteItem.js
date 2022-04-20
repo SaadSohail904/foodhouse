@@ -11,8 +11,11 @@ router.post('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-        var insertionResults = await functions.runQuery(`Insert into favourites_user_food_mapper(user_id, food_item_id) values(${req.body.user_id}, ${req.body.food_item_id})`);
-        res.send({ statusCode: 200, message: "Added succesfully"} );
+      var customerResults = await functions.runQuery(`Select customer.id from customer where customer.user_id = ${req.body.user_id}`)
+      if(customerResults.length){
+        var insertionResults = await functions.runQuery(`Insert into favourites_customer_food_mapper(customer_id, food_item_id) values(${customerResults[0].id}, ${req.body.food_item_id})`);
+      }
+      res.send({ statusCode: 200, message: "Added succesfully"} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
     }

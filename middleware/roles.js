@@ -1,2 +1,2 @@
-const userRoles = {"restaurant": "Restaurant", "customer": "Customer", "admin": "Admin"};
+const userRoles = ["Customer", "Restaurant","Admin"];
 module.exports = userRoles;
