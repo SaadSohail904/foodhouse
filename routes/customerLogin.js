@@ -43,7 +43,7 @@ router.post('/', async function (req, res, next) {
                   CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP,  INTERVAL 7 DAY))`;
                   await functions.runTransactionQuery(query, con);
                   con.commit();
-                  console.log(`Logged in customer ${customer[0].id} at ${new Date}`);
+                  console.log(`Logged in customer ${customer[0].customer_id} at ${new Date}`);
                   res.send({ statusCode: 200, customer: customer[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
                 
               }
