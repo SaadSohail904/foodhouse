@@ -6,9 +6,7 @@ exports.validateUser = async (req , res  , next)=>{
   
   try{
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")){
-      console.log("req.files", req.files)
       console.log("req.method", req.method)
-      console.log("req.headers", req.headers)
       token = req.headers.authorization.substring(7, req.headers.authorization.length);
       let query = `select u.id as user_id, a.id as token_id, a.end_date from user u inner join authtoken a on u.id = a.user_id where a.token = "${token}"`;
       let queryResults =  await functions.runQuery(query);
