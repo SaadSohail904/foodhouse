@@ -1,5 +1,7 @@
+const functions = require('../middleware/functions');
 
-export function exists(customer_id){
+module.exports = {
+    cartExists: async function(customer_id){
     let cartResults = await functions.runQuery(`Select id from cart where customer_id = ${customer_id}`)
     console.log(cartResults)
     if(cartResults.length){
@@ -8,3 +10,4 @@ export function exists(customer_id){
       return false;
     }
   }
+}
