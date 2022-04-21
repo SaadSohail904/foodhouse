@@ -11,7 +11,7 @@ router.post('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-        var insertionResults = await functions.runQuery(`Delete from cart where id = ${req.body.cart_id}`);
+        var insertionResults = await functions.runQuery(`Delete from cart_food_items_mapper where cart_id = ${req.body.cart_id}`);
         console.log(insertionResults)
         res.send({ statusCode: 200, message: "Deleted succesfully"} );
     }else {
