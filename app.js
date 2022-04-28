@@ -28,8 +28,9 @@ var deleteCart = require('./routes/deleteCart');
 var updateCart = require('./routes/updateCart');
 var logout = require('./routes/logout');
 
-
+var cors = require('cors')
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
