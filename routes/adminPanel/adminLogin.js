@@ -3,9 +3,9 @@ const express = require('express');
 const Joi = require('joi');
 const crypto = require('crypto');
 const router = express.Router();
-const functions = require('../middleware/functions');
-const pool = require("../db.js");
-const roles = require('../middleware/roles');
+const functions = require('../../middleware/functions');
+const pool = require("../../db.js");
+const roles = require('../../middleware/roles');
 
 
 const validationSchema = Joi.object().keys({
