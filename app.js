@@ -7,6 +7,7 @@ var logger = require('morgan');
 const VerifyTokenMiddleware = require('./middleware/authToken');
 
 var customerLogin = require('./routes/customerLogin');
+var adminLogin = require('./routes/adminPanel/adminLogin');
 var customerSignup = require('./routes/customerSignup');
 var forgotPassword = require('./routes/forgotPassword');
 var changePassword = require('./routes/changePassword');
@@ -41,6 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/customerSignup',  customerSignup);
+app.use('/adminLogin', adminLogin);
 app.use('/customerLogin', customerLogin);
 app.use('/forgotPassword', forgotPassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
