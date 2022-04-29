@@ -6,8 +6,12 @@ var logger = require('morgan');
 
 const VerifyTokenMiddleware = require('./middleware/authToken');
 
-var customerLogin = require('./routes/customerLogin');
+
 var adminLogin = require('./routes/adminPanel/adminLogin');
+var deleteUser = require('./routes/adminPanel/deleteUser');
+var getUsers = require('./routes/adminPanel/getUsers');
+
+var customerLogin = require('./routes/customerLogin');
 var customerSignup = require('./routes/customerSignup');
 var forgotPassword = require('./routes/forgotPassword');
 var changePassword = require('./routes/changePassword');
@@ -42,8 +46,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/customerSignup',  customerSignup);
 app.use('/adminLogin', adminLogin);
+app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
+app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
+
+
+app.use('/customerSignup',  customerSignup);
 app.use('/customerLogin', customerLogin);
 app.use('/forgotPassword', forgotPassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
