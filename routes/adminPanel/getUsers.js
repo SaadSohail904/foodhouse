@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
-const functions = require('../middleware/functions');
+const functions = require('../../middleware/functions');
 
 router.get('/', async function (req, res, next) {
   try{

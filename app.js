@@ -8,8 +8,8 @@ const VerifyTokenMiddleware = require('./middleware/authToken');
 
 
 var adminLogin = require('./routes/adminPanel/adminLogin');
-var deleteUser = require('./routes/adminPanel/deleteUser');
 var getUsers = require('./routes/adminPanel/getUsers');
+var deleteUser = require('./routes/adminPanel/deleteUser');
 
 var customerLogin = require('./routes/customerLogin');
 var customerSignup = require('./routes/customerSignup');
@@ -47,8 +47,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/adminLogin', adminLogin);
-app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
 app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
+app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
 
 
 app.use('/customerSignup',  customerSignup);

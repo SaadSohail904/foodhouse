@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
-const functions = require('../middleware/functions');
+const functions = require('../../middleware/functions');
 
 const validationSchema = Joi.object().keys({
     user_id: Joi.number().integer().required()
