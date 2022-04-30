@@ -13,6 +13,8 @@ var deleteUser = require('./routes/adminPanel/deleteUser');
 
 var customerLogin = require('./routes/customerLogin');
 var customerSignup = require('./routes/customerSignup');
+var restaurantSignup = require('./routes/restaurantSignup');
+var restaurantSignup = require('./routes/restaurantSignup');
 var forgotPassword = require('./routes/forgotPassword');
 var changePassword = require('./routes/changePassword');
 var getFavourites = require('./routes/getFavourites');
@@ -55,6 +57,8 @@ app.use('/updateUserAdmin', VerifyTokenMiddleware.validateAdmin, updateUser);
 
 app.use('/customerSignup',  customerSignup);
 app.use('/customerLogin', customerLogin);
+app.use('/restaurantSignup',  restaurantSignup);
+app.use('/restaurantLogin', restaurantLogin);
 app.use('/forgotPassword', forgotPassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
