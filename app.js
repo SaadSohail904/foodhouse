@@ -13,7 +13,7 @@ var deleteUser = require('./routes/adminPanel/deleteUser');
 
 var customerLogin = require('./routes/customerLogin');
 var customerSignup = require('./routes/customerSignup');
-var restaurantSignup = require('./routes/restaurantSignup');
+var restaurantLogin = require('./routes/restaurantLogin');
 var restaurantSignup = require('./routes/restaurantSignup');
 var forgotPassword = require('./routes/forgotPassword');
 var changePassword = require('./routes/changePassword');
