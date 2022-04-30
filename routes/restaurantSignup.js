@@ -16,12 +16,12 @@ router.post('/', function (req, res) {
     con.beginTransaction(async function () {
       try {
   			let validationSchema = Joi.object().keys({
-  			  fname: Joi.string().required(),
-  			  lname: Joi.string().required(),
+  			  name: Joi.string().required(),
+  			  address: Joi.string().required(),
   			  email: Joi.string().email().required(),
   			  mobileno: Joi.number().integer().required(),
   			  password: Joi.string().required(),
-  			  gender: Joi.number().integer().required().valid(0, 1)
+  			  owner: Joi.string().required()
   			  // age: Joi.number().integer().required(),
   			});
   			let validation = validationSchema.validate(req.body, { abortEarly: false });
