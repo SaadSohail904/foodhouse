@@ -30,6 +30,7 @@ var getCart = require('./routes/getCart');
 var removeFromCart = require('./routes/removeFromCart');
 var deleteCart = require('./routes/deleteCart');
 var updateCart = require('./routes/updateCart');
+var updateUser = require('./routes/updateUser');
 var logout = require('./routes/logout');
 
 var cors = require('cors')
@@ -49,11 +50,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminLogin', adminLogin);
 app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
 app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
+app.use('/updateUserAdmin', VerifyTokenMiddleware.validateAdmin, updateUser);
 
 
 app.use('/customerSignup',  customerSignup);
 app.use('/customerLogin', customerLogin);
 app.use('/forgotPassword', forgotPassword);
+app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
 app.use('/changePassword', VerifyTokenMiddleware.validateUser, changePassword);
 app.use('/getRestaurantsAndCategories', VerifyTokenMiddleware.validateUser, getRestaurantsAndCategories);
 app.use('/getRestaurantsByCategories', VerifyTokenMiddleware.validateUser, getRestaurantsByCategories);
@@ -70,6 +73,7 @@ app.use('/deleteCart', VerifyTokenMiddleware.validateUser, deleteCart);
 app.use('/getCart', VerifyTokenMiddleware.validateUser, getCart);
 app.use('/removeFromCart', VerifyTokenMiddleware.validateUser, removeFromCart);
 app.use('/updateCart', VerifyTokenMiddleware.validateUser, updateCart);
+app.use('/updateUser', VerifyTokenMiddleware.validateUser, updateUser);
 app.use('/logout', VerifyTokenMiddleware.validateUser, logout);
 
 // catch 404 and forward to error handler

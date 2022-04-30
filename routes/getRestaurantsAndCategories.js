@@ -15,7 +15,7 @@ router.get('/', async function (req, res, next) {
       req.query.filter = "";
     }
     if(!validated.error){
-      var restaurantResults = await functions.runQuery(`Select * from restaurants where name like "%${req.query.filter}%"`);
+      var restaurantResults = await functions.runQuery(`Select * from restaurants inner join user on restaurant.user_id = user.id  where name like "%${req.query.filter}%"`);
       var categoryResults = await functions.runQuery(`Select * from categories where name like "%${req.query.filter}%"`);
         res.send({ statusCode: 200, message: "Data retrieved", data: {categories: categoryResults, restaurants: restaurantResults} });
     }else {

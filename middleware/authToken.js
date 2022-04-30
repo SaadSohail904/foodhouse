@@ -50,6 +50,8 @@ exports.validateAdmin = async (req , res  , next)=>{
       token = req.headers.authorization.substring(7, req.headers.authorization.length);
       let query = `select u.id as user_id, a.id as token_id, a.end_date from user u inner join admin on u.id = admin.user_id inner join authtoken a on u.id = a.user_id where a.token = "${token}"`;
       let queryResults =  await functions.runQuery(query);
+      console.log(query)
+      console.log(queryResults)
       if(queryResults.length){
         let tokenEndDate = new Date(queryResults[0].end_date);
         await tokenEndDate.setMinutes(tokenEndDate.getMinutes());
@@ -57,10 +59,10 @@ exports.validateAdmin = async (req , res  , next)=>{
         await currentDate.setMinutes(currentDate.getMinutes());
         if(tokenEndDate > currentDate){
           if(req.method=="POST"){
-            req.body.user_id = queryResults[0].user_id;
+            req.body.admin_id = queryResults[0].user_id;
             console.log("req.body", req.body)
           } else if(req.method=="GET"){
-            req.query.user_id = queryResults[0].user_id;
+            req.query.admin_id = queryResults[0].user_id;
             console.log("req.query", req.query)
           }
           next();
