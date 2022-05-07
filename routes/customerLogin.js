@@ -48,8 +48,27 @@ router.post('/', async function (req, res, next) {
                 
               }
             } else {
-              con.rollback();
-              res.send({ statusCode: 405, message: "Email not registered" });
+              let restaurant = await functions.runTransactionQuery(`SELECT restaurant.id as restaurant_id, * FROM restaurant inner join
+              user on restaurant.user_id = user.id WHERE email = "${req.body.email}"`, con)
+              if (restaurant.length) {
+                let token = crypto.randomBytes(32).toString('hex');
+                let expiry_time = 1000*60*60*24*7;
+                restaurant[0].role = roles[1]
+                if (req.body.password != restaurant[0].password){
+                  res.send({ statusCode: 405, message: "Invalid credentials" })
+                } else {
+                    let query = `Insert into authtoken (token , user_id, start_date, end_date) values("${token}" ,${restaurant[0].user_id},
+                    CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP,  INTERVAL 7 DAY))`;
+                    await functions.runTransactionQuery(query, con);
+                    con.commit();
+                    console.log(`Logged in restaurant ${restaurant[0].restaurant_id} at ${new Date}`);
+                    res.send({ statusCode: 200, restaurant: restaurant[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
+                  
+                }
+              } else {
+                con.rollback();
+                res.send({ statusCode: 405, message: "Email not registered" });
+              }
             }
           } else {
             con.rollback();

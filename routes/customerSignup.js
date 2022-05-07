@@ -30,9 +30,9 @@ router.post('/', function (req, res) {
   				// var age = req.body.age;
           req.body.email = req.body.email.toLowerCase();
           let currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-          var userResults = await functions.runTransactionQuery(`Insert into user(role) values(0)`, con);
-          var queryResults = await functions.runTransactionQuery(`Insert into customer(fname, lname, password, gender, mobileno, email, user_id) values("${req.body.fname}", "${req.body.lname}",
-          "${req.body.password}", ${req.body.gender}, ${req.body.mobileno}, "${req.body.email}", ${userResults.insertId})`, con);
+          var userResults = await functions.runTransactionQuery(`Insert into user(email, password) values("${req.body.email}", "${req.body.password}")`, con);
+          var queryResults = await functions.runTransactionQuery(`Insert into customer(fname, lname, gender, mobileno, user_id) values("${req.body.fname}", "${req.body.lname}",
+           ${req.body.gender}, ${req.body.mobileno}, ${userResults.insertId})`, con);
           console.log(`Registered user ${queryResults.insertId} at ${new Date()}`)
         	con.commit();
   				res.send({statusCode: 200, message:"Signed up successfully"});

@@ -9,6 +9,7 @@ const VerifyTokenMiddleware = require('./middleware/authToken');
 
 var adminLogin = require('./routes/adminPanel/adminLogin');
 var getUsers = require('./routes/adminPanel/getUsers');
+var getOrdersAdmin = require('./routes/adminPanel/getOrdersAdmin');
 var deleteUser = require('./routes/adminPanel/deleteUser');
 
 var customerLogin = require('./routes/customerLogin');
@@ -52,6 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/adminLogin', adminLogin);
 app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
+app.use('/getOrdersAdmin', VerifyTokenMiddleware.validateAdmin, getOrdersAdmin);
 app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
 app.use('/updateUserAdmin', VerifyTokenMiddleware.validateAdmin, updateUser);
 app.use('/updateRestaurantAdmin', VerifyTokenMiddleware.validateAdmin, updateRestaurant);
