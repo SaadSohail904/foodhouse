@@ -33,6 +33,7 @@ var removeFromCart = require('./routes/removeFromCart');
 var deleteCart = require('./routes/deleteCart');
 var updateCart = require('./routes/updateCart');
 var updateUser = require('./routes/updateUser');
+var updateRestaurant = require('./routes/updateRestaurant');
 var logout = require('./routes/logout');
 
 var cors = require('cors')
@@ -53,6 +54,7 @@ app.use('/adminLogin', adminLogin);
 app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
 app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
 app.use('/updateUserAdmin', VerifyTokenMiddleware.validateAdmin, updateUser);
+app.use('/updateRestaurantAdmin', VerifyTokenMiddleware.validateAdmin, updateRestaurant);
 
 
 app.use('/customerSignup',  customerSignup);
@@ -78,6 +80,7 @@ app.use('/getCart', VerifyTokenMiddleware.validateUser, getCart);
 app.use('/removeFromCart', VerifyTokenMiddleware.validateUser, removeFromCart);
 app.use('/updateCart', VerifyTokenMiddleware.validateUser, updateCart);
 app.use('/updateUser', VerifyTokenMiddleware.validateUser, updateUser);
+app.use('/updateRestaurant', VerifyTokenMiddleware.validateUser, updateRestaurant);
 app.use('/logout', VerifyTokenMiddleware.validateUser, logout);
 
 // catch 404 and forward to error handler
