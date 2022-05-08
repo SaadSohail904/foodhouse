@@ -15,12 +15,9 @@ router.get('/', async function (req, res, next) {
         var customerResults = await functions.runQuery(`Select customer.id from customer where customer.user_id = ${req.query.user_id}`)
         var ordersResults = []
         if(customerResults.length){
-            console.log(`Select o.id as order_id, o.status, o.customer_id as customer_id,
-            o.restaurant_id as restaurant_id, r.name as restaurant_name, f.name, f.id as food_item_id, f.price, f.image, f.category_id from orders o inner join order_food_items_mapper m on o.id = m.order_id inner join food_items f
-            on m.food_item_id = f.id inner join restaurants r on r.id = f.restaurant_id where (o.customer_id = ${customerResults[0].id}`)
-          ordersResults = await functions.runQuery(`Select o.id as order_id, o.status, o.customer_id as customer_id,
-          o.restaurant_id as restaurant_id, f.name, f.id as food_item_id, f.price, f.image, f.category_id from orders o inner join order_food_items_mapper m on o.id = m.order_id inner join food_items f
-          on m.food_item_id = f.id where o.customer_id = ${customerResults[0].id}`);
+          ordersResults = await functions.runQuery(`Select o.id as order_id, o.status, o.created_at, o.customer_id as customer_id,
+          o.restaurant_id as restaurant_id, f.name, f.id as food_item_id, f.price, f.image, f.category_id, r.name as restaurant_name, u.image as restaurant_image from orders o inner join order_food_items_mapper m on o.id = m.order_id inner join food_items f
+          on m.food_item_id = f.id inner join restaurants r on r.id = f.restaurant_id inner join user u on u.id = r.user_id  where o.customer_id = ${customerResults[0].id}`);
         }
         let ordersArray = _.uniqBy(ordersResults, "order_id");
         console.log(JSON.stringify(ordersArray))
@@ -29,11 +26,14 @@ router.get('/', async function (req, res, next) {
             ordersArray[i] = _.pick(ordersArray[i], [
                 "order_id",
                 "status",
+                "restaurant_image",
+                "created_at",
                 "customer_id",
                 "restaurant_id",
                 "restaurant_name"
             ])
             ordersArray[i]['food_items'] = [];
+            ordersArray[i]['created_at'] = new Date(ordersArray[i]['created_at']);
         for(let food_item of ordersResults){
                 if(ordersArray[i].order_id == food_item.order_id){
                     ordersArray[i]['food_items'].push(_.pick(food_item, [
