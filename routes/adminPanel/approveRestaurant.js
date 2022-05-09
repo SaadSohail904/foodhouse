@@ -11,9 +11,8 @@ router.post('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
-        var insertionResults = await functions.runQuery(`Delete from user where id = ${req.body.user_id}`);
-        console.log(insertionResults)
-        res.send({ statusCode: 200, message: "Deleted successfully"} );
+        var updateResults = await functions.runQuery(`Update restaurants set verified = true where user_id = ${req.body.user_id}`);
+        res.send({ statusCode: 200, message: "Approved successfully"} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
     }

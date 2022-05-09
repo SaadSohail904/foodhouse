@@ -9,6 +9,8 @@ const VerifyTokenMiddleware = require('./middleware/authToken');
 
 var adminLogin = require('./routes/adminPanel/adminLogin');
 var getUsers = require('./routes/adminPanel/getUsers');
+var approveRestaurant = require('./routes/adminPanel/approveRestaurant');
+var approvePayment = require('./routes/adminPanel/approvePayment');
 var getOrdersAdmin = require('./routes/adminPanel/getOrdersAdmin');
 var deleteUser = require('./routes/adminPanel/deleteUser');
 
@@ -53,6 +55,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/adminLogin', adminLogin);
 app.use('/getUsers', VerifyTokenMiddleware.validateAdmin, getUsers);
+app.use('/approveRestaurant', VerifyTokenMiddleware.validateAdmin, approveRestaurant);
+app.use('/approvePayment', VerifyTokenMiddleware.validateAdmin, approvePayment);
 app.use('/getOrdersAdmin', VerifyTokenMiddleware.validateAdmin, getOrdersAdmin);
 app.use('/deleteUser', VerifyTokenMiddleware.validateAdmin, deleteUser);
 app.use('/updateUserAdmin', VerifyTokenMiddleware.validateAdmin, updateUser);
