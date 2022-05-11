@@ -48,8 +48,10 @@ router.post('/', async function (req, res, next) {
                 
               }
             } else {
-              let restaurant = await functions.runTransactionQuery(`SELECT restaurant.id as restaurant_id, * FROM restaurant inner join
-              user on restaurant.user_id = user.id WHERE email = "${req.body.email}"`, con)
+              console.log(`SELECT * FROM restaurants inner join
+              user on restaurants.user_id = user.id WHERE email = "${req.body.email}"`)
+              let restaurant = await functions.runTransactionQuery(`SELECT *, restaurants.id as restaurant_id FROM restaurants inner join
+              user on restaurants.user_id = user.id WHERE email = "${req.body.email}"`, con)
               if (restaurant.length) {
                 let token = crypto.randomBytes(32).toString('hex');
                 let expiry_time = 1000*60*60*24*7;
