@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const router = express.Router();
 const functions = require('../middleware/functions');
 const pool = require("../db.js");
-const roles = require('../middleware/roles');
 
 
 const validationSchema = Joi.object().keys({
@@ -33,8 +32,7 @@ router.post('/', async function (req, res, next) {
               }
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;
-              customer[0].role = roles[0]
-              console.log(customer[0].role)
+              customer[0].role = 0
               customer[0].fullname = customer[0].first_name + " " + customer[0].last_name;
               if (req.body.password != customer[0].password){
                 res.send({ statusCode: 405, message: "Invalid credentials" })
@@ -55,7 +53,7 @@ router.post('/', async function (req, res, next) {
               if (restaurant.length) {
                 let token = crypto.randomBytes(32).toString('hex');
                 let expiry_time = 1000*60*60*24*7;
-                restaurant[0].role = roles[1]
+                restaurant[0].role = 1
                 if (req.body.password != restaurant[0].password){
                   res.send({ statusCode: 405, message: "Invalid credentials" })
                 } else {

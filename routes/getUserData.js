@@ -25,7 +25,7 @@ router.get('/', async function (req, res, next) {
           console.log(userResults)
           break;
         case 1:
-          userResults = await functions.runQuery(`Select *, restaurant.id as restaurant_id from restaurant inner join user on user.id=restaurant.user_id where user.id = ${req.query.user_id}`);
+          userResults = await functions.runQuery(`Select *, restaurants.id as restaurants_id from restaurants inner join user on user.id=restaurants.user_id where user.id = ${req.query.user_id}`);
           break;
         case 2:
           userResults = await functions.runQuery(`Select *, admin.id as admin_id from admin inner join user on user.id=admin.user_id where user.id = ${req.query.user_id}`);
@@ -33,6 +33,7 @@ router.get('/', async function (req, res, next) {
         default:
           break;
       }
+      userResults[0].role = req.query.role
         res.send({ statusCode: 200, message: "Data retrieved", data: userResults} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
