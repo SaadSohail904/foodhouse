@@ -62,7 +62,7 @@ router.post('/', async function (req, res, next) {
                     await functions.runTransactionQuery(query, con);
                     con.commit();
                     console.log(`Logged in restaurant ${restaurant[0].restaurant_id} at ${new Date}`);
-                    res.send({ statusCode: 200, restaurant: restaurant[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
+                    res.send({ statusCode: 200, customer: restaurant[0], message: "Logged in successfully", token: token, expiry_time: expiry_time});
                   
                 }
               } else {
