@@ -38,9 +38,7 @@ const upload = multer({ //multer settings
         callback(null, true)
     }
 });
-const validationSchema = Joi.object().keys({
-    user_id: Joi.number().integer().required()
-  })
+
 router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
       try{
         if(imageFiles['image'].length > 0){
@@ -48,17 +46,12 @@ router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
           let pathToSend = "/userImages";
           imageFiles['image'] = `${pathToSend}/${imageFiles['image']}`;
           console.log(req.body)
-          let validated = validationSchema.validate(req.body);
-          console.log(JSON.stringify(validated))
-          if(!validated.error){
             imageFiles['image'] = imageFiles['image'].replace(/\\/g,"/");
             let query = `Update user set image = "${imageFiles['image']}" where id = ${req.body.user_id}`;
             console.log(query)
             let queryResults = await functions.runQuery(query);
             res.send({statusCode: 200, message: "Image updated"});
-          } else {
-            res.send({statusCode: 405, message: validated.error.message});
-          }
+         
         } else{
           res.send({statusCode: 405, message: "No image uploaded"});
         }
