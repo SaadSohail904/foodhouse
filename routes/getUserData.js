@@ -33,7 +33,9 @@ router.get('/', async function (req, res, next) {
         default:
           break;
       }
-      userResults[0].role = req.query.role
+      if(userResults.length){
+        userResults[0].role = req.query.role
+      }
         res.send({ statusCode: 200, message: "Data retrieved", data: userResults} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
