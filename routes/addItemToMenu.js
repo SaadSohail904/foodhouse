@@ -14,9 +14,9 @@ router.post('/', async function (req, res, next) {
     if(!validated.error){
         console.log(`Insert into food_items(name, price, image, restaurant_id, category_id) values (${req.body.item.name, req.body.item.price, 
             req.body.item.image, req.body.restaurant_id, req.body.item.category_id})`)
-        // await functions.runQuery(`Insert into food_items(name, price, image, restaurant_id, category_id) values (${req.body.item.name, req.body.item.price, 
-            // req.body.item.image, req.body.restaurant_id, req.body.item.category_id})`)
-        res.send({ statusCode: 200, message: "Removed item succesfully"} );
+        await functions.runQuery(`Insert into food_items(name, price, image, restaurant_id, category_id) values (${req.body.item.name, req.body.item.price, 
+            req.body.item.image, req.body.restaurant_id, req.body.item.category_id})`)
+        res.send({ statusCode: 200, message: "Inserted item succesfully"} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
     }
