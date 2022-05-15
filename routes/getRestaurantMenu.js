@@ -11,6 +11,7 @@ router.get('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.query);
     if(!validated.error){
+      console.log(req.query)
         var foodItemsResults = await functions.runQuery(`Select * from food_items where restaurant_id = ${req.query.restaurant_id}`);
         var customerResults = await functions.runQuery(`Select customer.id from customer where customer.user_id = ${req.query.user_id}`)
         if(customerResults.length){
