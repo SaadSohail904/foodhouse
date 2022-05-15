@@ -44,9 +44,6 @@ router.get('/', async function (req, res, next) {
         default:
           break;
       }
-      if(!userResults[0].fname){
-        userResults[0].fname = userResults[0].
-      }
         res.send({ statusCode: 200, message: "Data retrieved", data: userResults} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
