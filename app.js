@@ -26,7 +26,6 @@ var addFavouriteItem = require('./routes/addFavouriteItem');
 var deleteFavouriteItem = require('./routes/deleteFavouriteItem');
 var getRestaurantsByCategories = require('./routes/getRestaurantsByCategories');
 var getRestaurantMenu = require('./routes/getRestaurantMenu');
-var updateMenu = require('./routes/updateMenu');
 var removeItemFromMenu = require('./routes/removeItemFromMenu');
 var addItemToMenu = require('./routes/addItemToMenu');
 var getRestaurantOrders = require('./routes/getRestaurantOrders');
