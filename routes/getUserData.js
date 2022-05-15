@@ -4,8 +4,8 @@ const router = express.Router();
 const functions = require('../middleware/functions');
 
 const validationSchema = Joi.object().keys({
-  role: Joi.number().integer().required(),
-  user_id: Joi.number().integer().required()
+  user_id: Joi.number().integer().required(),
+  role: Joi.number().integer()
 });
 router.get('/', async function (req, res, next) {
   try{
@@ -13,9 +13,16 @@ router.get('/', async function (req, res, next) {
     if(!validated.error){
       let userResults = []
           console.log(userResults)
+          userResults = await functions.runQuery(`Select *, customer.id as customer_id from customer inner join user on user.id=customer.user_id where customer.user_id = ${req.query.user_id}`);
+      if(userResults.length && !req.query.role){
+        req.query.role = 0;
+      } else if(!req.query.role && !userResults.length){
+        req.query.role = 1;
+      }
       switch(parseInt(req.query.role)){
         case 0: 
           userResults = await functions.runQuery(`Select *, customer.id as customer_id from customer inner join user on user.id=customer.user_id where user.id = ${req.query.user_id}`);
+          
           if(userResults.length){
             let cartResults = await functions.runQuery(`Select * from cart where cart.customer_id = ${userResults[0].customer_id}`);
             if(cartResults.length){
