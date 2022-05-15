@@ -4,7 +4,7 @@ const router = express.Router();
 const functions = require('../middleware/functions');
 
 const validationSchema = Joi.object().keys({
-    restaurant_id: Joi.number().integer().required(),
+    restaurant_id: Joi.string().required(),
     user_id: Joi.number().integer().required()
 });
 router.get('/', async function (req, res, next) {
