@@ -33,6 +33,7 @@ var setOrderStatus = require('./routes/setOrderStatus');
 var getFoodItemsByCategories = require('./routes/getFoodItemsByCategories');
 var getUserData = require('./routes/getUserData');
 var uploadImage = require('./routes/uploadImage');
+var uploadImageItem = require('./routes/uploadImageItem');
 var addToCart = require('./routes/addToCart');
 var createCart = require('./routes/createCart');
 var getCart = require('./routes/getCart');
@@ -86,7 +87,8 @@ app.use('/addFavouriteItem', VerifyTokenMiddleware.validateUser, addFavouriteIte
 app.use('/deleteFavouriteItem', VerifyTokenMiddleware.validateUser, deleteFavouriteItem);
 app.use('/getFoodItemsByCategories', VerifyTokenMiddleware.validateUser, getFoodItemsByCategories);
 app.use('/getUserData', VerifyTokenMiddleware.validateUser, getUserData);
-app.use('/uploadImage', VerifyTokenMiddleware.validateUser, uploadImage);
+app.use('/uploadImage',  uploadImage);
+app.use('/uploadImageItem',  uploadImageItem);
 app.use('/addToCart', VerifyTokenMiddleware.validateUser, addToCart);
 app.use('/createCart', VerifyTokenMiddleware.validateUser, createCart);
 app.use('/deleteCart', VerifyTokenMiddleware.validateUser, deleteCart);
