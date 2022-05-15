@@ -32,7 +32,7 @@ router.post('/', async function (req, res, next) {
               }
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;
-              customer[0].role = 1
+              customer[0].role = 0
               customer[0].fullname = customer[0].first_name + " " + customer[0].last_name;
               if (req.body.password != customer[0].password){
                 res.send({ statusCode: 405, message: "Invalid credentials" })
