@@ -4,7 +4,6 @@ const router = express.Router();
 const functions = require('../middleware/functions');
 
 const validationSchema = Joi.object().keys({
-    restaurant_id: Joi.number().integer().required(), 
     user_id: Joi.number().integer().required()
 });
 router.post('/', async function (req, res, next) {
