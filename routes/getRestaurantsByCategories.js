@@ -10,6 +10,7 @@ const validationSchema = Joi.object().keys({
 });
 router.post('/', async function (req, res, next) {
   try{
+    console.log(req.body)
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
 
