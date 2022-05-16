@@ -23,7 +23,9 @@ router.post('/', async function (req, res, next) {
           }
           itemsQuery = itemsQuery.slice(0, -1)
           console.log(itemsQuery)
-          res.send({ statusCode: 200, message: "Added succesfully"} );
+          await functions.runQuery(itemsQuery)
+          await functions.runQuery(`Delete from cart where customer_id = ${customerResults[0].id}`)
+          res.send({ statusCode: 200, message: "Your order has been placed"} );
         } else{
           res.send({ statusCode: 405, message: "No item in cart"} );
         }
