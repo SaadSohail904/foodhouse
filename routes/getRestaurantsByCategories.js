@@ -5,15 +5,12 @@ const functions = require('../middleware/functions');
 
 
 const validationSchema = Joi.object().keys({
-    categories: Joi.array(),
+    categories: Joi.array().required(),
     user_id: Joi.number().integer().required()
 });
 router.post('/', async function (req, res, next) {
   try{
     let validated = validationSchema.validate(req.body);
-    if(!req.body.categories){
-      req.body.categories = [-1];
-    }
     if(!validated.error){
 
         var restaurantResults = await functions.runQuery(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
