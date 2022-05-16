@@ -29,18 +29,21 @@ router.get('/', async function (req, res, next) {
               userResults[0].cart_id = cartResults[0].id;
             }
           }
-          console.log(userResults)
+            userResults[0].role = 0
+            console.log(userResults)
           break;
         case 1:
           userResults = await functions.runQuery(`Select *, restaurants.id as restaurants_id from restaurants inner join user on user.id=restaurants.user_id where user.id = ${req.query.user_id}`);
           if(userResults.length){
             userResults[0].fname = userResults[0].owner
             userResults[0].lname = ""
+            userResults[0].role = 1
           }
           break;
         case 2:
           userResults = await functions.runQuery(`Select *, admin.id as admin_id from admin inner join user on user.id=admin.user_id where user.id = ${req.query.user_id}`);
-          break;
+            userResults[0].role = 2
+            break;
         default:
           break;
       }
