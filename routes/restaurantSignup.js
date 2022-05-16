@@ -40,7 +40,7 @@ router.post('/', function (req, res) {
             from: `Food House <${email}>`,
             subject: 'Food app Registration',
             html:`<p style="text-align: left;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;">
-            Hello ${req.body.owner}!
+            Dear ${req.body.owner},
             <br>
             Thank you for registering to foodhouse. To proceed with your registration process kindly deposit a one-time payment of PKR 10000/- to the following account:<br><br> 
             Account No. 12345678<br>
