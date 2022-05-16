@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const express = require('express');
 const Joi = require('joi');
 const router = express.Router();
+const {smtpTransport,email} = require('../middleware/nodemailer');
 const functions = require('../middleware/functions');
 const pool = require("../db.js");
 
