@@ -14,9 +14,9 @@ router.get('/', async function (req, res, next) {
         var restaurantResults = await functions.runQuery(`Select restaurants.id from restaurants where restaurants.user_id = ${req.query.user_id}`)
         var ordersResults = []
         if(restaurantResults.length){
-          ordersResults = await functions.runQuery(`Select o.id as order_id, o.status, o.created_at, o.customer_id as customer_id,
+          ordersResults = await functions.runQuery(`Select o.id as order_id, o.status, o.created_at, o.customer_id as customer_id, c.customer_name,
           o.restaurant_id as restaurant_id, f.name, f.id as food_item_id, f.price, f.image, f.category_id, r.name as restaurant_name, u.image as restaurant_image from orders o inner join order_food_items_mapper m on o.id = m.order_id inner join food_items f
-          on m.food_item_id = f.id inner join restaurants r on r.id = f.restaurant_id inner join user u on u.id = r.user_id where o.restaurant_id = ${restaurantResults[0].id}`);
+          on m.food_item_id = f.id inner join restaurants r on r.id = f.restaurant_id inner join user u on u.id = r.user_id inner join customer c on c.user_id = u.id where o.restaurant_id = ${restaurantResults[0].id}`);
         }
         let ordersArray = _.uniqBy(ordersResults, "order_id");
         console.log(JSON.stringify(ordersArray))
