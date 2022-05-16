@@ -18,6 +18,8 @@ router.post('/', async function (req, res, next) {
 
         var restaurantResults = await functions.runQuery(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
         categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`);
+        console.log(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
+        categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`)
         res.send({ statusCode: 200, message: "Data retrieved", data: restaurantResults} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
