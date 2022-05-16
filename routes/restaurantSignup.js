@@ -34,6 +34,22 @@ router.post('/', function (req, res) {
            "${req.body.owner}", "${req.body.mobileno}", "${req.body.address}",  ${userResults.insertId})`, con);
           console.log(`Registered restaurant ${queryResults.insertId} at ${new Date()}`)
         	con.commit();
+          var mailOptions = {
+            to: req.body.email,
+            from: `Food House <${email}>`,
+            subject: 'Food app Registration',
+            html:`<p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;">
+            <br>
+            Thank you for registering to foodhouse. Kindly deposit PKR 10000/- to the following account: 
+            Account No. 12345678
+            Account Title: Foodhouse Admin
+            Bank: Habib Bank Limited
+            Your registration request will be put on hold until the payment is completed. We look forward to working with you.
+            <br><br>
+            Stay safe and have a good day!&nbsp;<br>
+            <br>`
+          };
+          await smtpTransport.sendMail(mailOptions);
             res.send({statusCode: 200, message:"Signed up successfully"});
   			} else {
           con.rollback();
