@@ -14,7 +14,7 @@ router.post('/', async function (req, res, next) {
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
 
-        var restaurantResults = await functions.runQuery(`Select distinct r.id as id, * from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
+        var restaurantResults = await functions.runQuery(`Select distinct r.id as id, r.* from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
         categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`);
         console.log(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
         categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`)
