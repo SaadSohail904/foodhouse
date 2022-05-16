@@ -16,7 +16,7 @@ router.get('/', async function (req, res, next) {
         if(customerResults.length){
           ordersResults = await functions.runQuery(`Select o.id as order_id, o.status, o.customer_id as customer_id,
           o.restaurant_id as restaurant_id, f.name, f.id as food_item_id, f.price, f.image, f.category_id from orders o inner join order_food_items_mapper m on o.id = m.order_id inner join food_items f
-          on m.food_item_id = f.id where (o.customer_id = ${customerResults[0].id}`);
+          on m.food_item_id = f.id where o.customer_id = ${customerResults[0].id}`);
         }
         let ordersArray = _.uniqBy(ordersResults, "order_id");
         for(let order of ordersArray){
