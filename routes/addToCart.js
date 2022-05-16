@@ -31,6 +31,7 @@ router.post('/', async function (req, res, next) {
                   req.body.cart_id = insertionResults.insertId;
                 }
             }
+            console.log(`Select * from cart_food_items_mapper c inner join food_items on food_items.id = c.food_item_id where c.cart_id = ${req.body.cart_id}`)
             let previousItems = await functions.runQuery(`Select * from cart_food_items_mapper c inner join food_items on food_items.id = c.food_item_id where c.cart_id = ${req.body.cart_id}`);
             if(previousItems.length && previousItems[0].restaurant_id != req.body.restaurant_id){
             con.rollback();
