@@ -19,7 +19,7 @@ router.post('/', async function (req, res, next) {
           var insertionResults = await functions.runQuery(`Insert into orders(customer_id, restaurant_id, status, created_at) values(${customerResults[0].id}, ${foodItemResults[0].restaurant_id}, "Pending", CURRENT_TIMESTAMP)`);
           let itemsQuery = `Insert into order_food_items_mapper(order_id, food_item_id) values`
           for(let item of foodItemResults){
-            itemsQuery+=`(${insertionResults.insertId} ${item.id}),`
+            itemsQuery+=`(${insertionResults.insertId}, ${item.id}),`
           }
           itemsQuery = itemsQuery.slice(0, -1)
           console.log(itemsQuery)
