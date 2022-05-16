@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
         var restaurantResults = [];
         console.log(req.body.categories)
         if(req.body.categories.length){
-          await functions.runQuery(`Select distinct r.id as id, r.* from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
+          restaurantResults = await functions.runQuery(`Select distinct r.id as id, r.* from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
           categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`);
           console.log(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
           categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`)
