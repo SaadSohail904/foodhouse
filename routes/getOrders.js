@@ -24,6 +24,7 @@ router.get('/', async function (req, res, next) {
                 "order_id",
                 "status",
                 "customer_id",
+                "created_at",
                 "restaurant_id"
             ])
             order['food_items'] = [];
