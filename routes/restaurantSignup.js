@@ -42,10 +42,10 @@ router.post('/', function (req, res) {
             html:`<p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;">
             Hello ${req.body.owner}!
             <br>
-            Thank you for registering to foodhouse. To proceed with your registration process kindly deposit a one-time payment of PKR 10000/- to the following account: 
-            Account No. 12345678
-            Account Title: Foodhouse Admin
-            Bank: Habib Bank Limited
+            Thank you for registering to foodhouse. To proceed with your registration process kindly deposit a one-time payment of PKR 10000/- to the following account:<br> 
+            Account No. 12345678<br>
+            Account Title: Foodhouse Admin<br>
+            Bank: Habib Bank Limited<br>
             Your registration request will be put on hold until the payment is completed. We look forward to working with you.
             <br><br>
             Stay safe and have a good day!&nbsp;<br>
