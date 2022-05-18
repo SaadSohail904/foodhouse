@@ -50,7 +50,7 @@ router.post('/', upload.fields([{name: 'image'}]), async function (req, res) {
             let query = `Update user set image = "${imageFiles['image']}" where id = ${req.body.user_id}`;
             console.log(query)
             let queryResults = await functions.runQuery(query);
-            res.send({statusCode: 200, message: "Image updated"});
+            res.send({statusCode: 200, message: "Image updated", data: imageFiles['image']});
          
         } else{
           res.send({statusCode: 405, message: "No image uploaded"});
