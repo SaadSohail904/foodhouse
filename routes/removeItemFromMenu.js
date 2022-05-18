@@ -13,7 +13,7 @@ router.post('/', async function (req, res, next) {
     let validated = validationSchema.validate(req.body);
     if(!validated.error){
         console.log(`Delete from food_items where id = ${req.body.item.id}`)
-        // await functions.runQuery(`Delete from food_items where id = ${req.body.item.id}`)
+        await functions.runQuery(`Delete from food_items where id = ${req.body.item.id}`)
         res.send({ statusCode: 200, message: "Removed item succesfully"} );
     }else {
         res.send({ statusCode: 405, message: validated.error.message });
