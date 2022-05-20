@@ -25,7 +25,7 @@ router.get('/', async function (req, res, next) {
           for(let ratingRestaurant of restaurantRatings){
           console.log("ratingRestaurant", ratingRestaurant.restaurant_id)
           if(ratingRestaurant.restaurant_id === originalRestaurant.restaurant_id){
-              originalRestaurant.rating = Math.round(parseFloat(ratingRestaurant.ratingSum)/parseFloat(ratingRestaurant.ordersCount))
+              originalRestaurant.rating = parseFloat(ratingRestaurant.ratingSum)/parseFloat(ratingRestaurant.ordersCount)
           console.log("ratingRestaurant.rating", ratingRestaurant.ratingSum)
           console.log("ratingRestaurant.ordersCount", ratingRestaurant.ordersCount)
           console.log("originalRestaurant.rating", ratingRestaurant.rating)
