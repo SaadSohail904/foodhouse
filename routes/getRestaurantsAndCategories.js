@@ -20,9 +20,9 @@ router.get('/', async function (req, res, next) {
       if(checkIfAdmin){
         var restaurantRatings = await functions.runQuery(`Select SUM(rating) as ratingSum, COUNT(orders.id) as ordersCount, restaurant_id from orders inner join restaurants on restaurants.id = orders.restaurant_id group by orders.restaurant_id `)
         
-        for(let originalRestaurant in restaurantResults){
+        for(let originalRestaurant of restaurantResults){
           console.log("originalRestaurant", originalRestaurant.restaurant_id)
-          for(let ratingRestaurant in restaurantRatings){
+          for(let ratingRestaurant of restaurantRatings){
           console.log("ratingRestaurant", ratingRestaurant.restaurant_id)
           if(ratingRestaurant.restaurant_id === originalRestaurant.restaurant_id){
               originalRestaurant.rating = Math.round(parseFloat(ratingRestaurant.ratingSum)/parseFloat(ratingRestaurant.ordersCount))
