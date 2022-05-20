@@ -17,13 +17,13 @@ router.post('/', async function (req, res, next) {
         var restaurantResults = [];
         console.log(req.body.categories)
         if(req.body.categories.length){
-          restaurantResults = await functions.runQuery(`Select distinct r.id as restaurant_id, r.*, u.* from restaurants r inner join user u on u.id = r.user_id left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
-          categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`);
-          console.log(`Select distinct r.id, r.name from restaurants r left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
-          categories c on m.category_id = c.id where c.id in (${req.body.categories.toString()})`)
+          restaurantResults = await functions.runQuery(`Select distinct r.id as restaurant_id, r.*, u.* from restaurants r inner join user u on u.id = r.user_id  inner join food_items f on r.id = f.restaurant_id left join
+          categories c on f.category_id = c.id where c.id in (${req.body.categories.toString()})`);
+          console.log(`Select distinct r.id as restaurant_id, r.*, u.* from restaurants r inner join user u on u.id = r.user_id  inner join food_items f on r.id = f.restaurant_id left join
+          categories c on f.category_id = c.id where c.id in (${req.body.categories.toString()})`)
         } else{
-          restaurantResults = await functions.runQuery(`Select distinct r.id as restaurant_id, r.*, u.* from restaurants r inner join user u on u.id = r.user_id left join restaurant_categories_mapper m on r.id = m.restaurant_id left join
-          categories c on m.category_id = c.id`);
+          restaurantResults = await functions.runQuery(`Select distinct r.id as restaurant_id, r.*, u.* from restaurants r inner join user u on u.id = r.user_id  inner join food_items f on r.id = f.restaurant_id left join
+          categories c on f.category_id = c.id`);
          
         }
         res.send({ statusCode: 200, message: "Data retrieved", data: restaurantResults} );
