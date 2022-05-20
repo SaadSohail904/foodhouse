@@ -32,6 +32,7 @@ var addItemToMenu = require('./routes/addItemToMenu');
 var getRestaurantOrders = require('./routes/getRestaurantOrders');
 var getOrders = require('./routes/getOrders');
 var setOrderStatus = require('./routes/setOrderStatus');
+var setRating = require('./routes/setRating');
 var getFoodItemsByCategories = require('./routes/getFoodItemsByCategories');
 var getUserData = require('./routes/getUserData');
 var uploadImage = require('./routes/uploadImage');
@@ -83,6 +84,7 @@ app.use('/getRestaurantMenu', VerifyTokenMiddleware.validateUser, getRestaurantM
 app.use('/removeItemFromMenu', VerifyTokenMiddleware.validateUser, removeItemFromMenu);
 app.use('/addItemToMenu', VerifyTokenMiddleware.validateUser, addItemToMenu);
 app.use('/setOrderStatus', VerifyTokenMiddleware.validateUser, setOrderStatus);
+app.use('/setRating', VerifyTokenMiddleware.validateUser, setRating);
 app.use('/getRestaurantOrders', VerifyTokenMiddleware.validateUser, getRestaurantOrders);
 app.use('/getOrders', VerifyTokenMiddleware.validateUser, getOrders);
 app.use('/getFavourites', VerifyTokenMiddleware.validateUser, getFavourites);
