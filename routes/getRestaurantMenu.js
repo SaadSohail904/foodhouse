@@ -13,6 +13,10 @@ router.get('/', async function (req, res, next) {
     if(!validated.error){
       console.log(req.query)
         var foodItemsResults = await functions.runQuery(`Select * from food_items where restaurant_id = ${req.query.restaurant_id}`);
+        var bestSellerResults = await functions.runQuery(`Select *, COUNT(m.food_item_id) as count from food_items f inner join order_food_items_mapper m on m.food_item_id = f.id where f.restaurant_id = 22 GROUP by food_item_id order by count DESC LIMIT 1`);
+        if(bestSellerResults.length && foodItemsResults.length){
+          foodItemsResults[0]['bestSeller'] = bestSellerResults[0]
+        }
         var customerResults = await functions.runQuery(`Select customer.id from customer where customer.user_id = ${req.query.user_id}`)
         if(customerResults.length){
           var favourites = await functions.runQuery(`Select * from favourites_customer_food_mapper m inner join food_items f on m.food_item_id = f.id 
