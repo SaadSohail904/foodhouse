@@ -16,7 +16,7 @@ router.get('/', async function (req, res, next) {
         var bestSellerResults = await functions.runQuery(`Select *, COUNT(m.food_item_id) as count from food_items f inner join order_food_items_mapper m on m.food_item_id = f.id where f.restaurant_id = 22 GROUP by food_item_id order by count DESC LIMIT 1`);
         if(bestSellerResults.length && foodItemsResults.length){
           for(let item of foodItemsResults){
-            if(item.food_item_id === bestSellerResults[0].food_item_id){
+            if(item.id === bestSellerResults[0].food_item_id){
               item.bestSeller = true;
             } else{
               item.bestSeller = false;
