@@ -26,6 +26,7 @@ router.post('/', async function (req, res, next) {
             req.body.email = req.body.email.toLowerCase();
             let restaurant = await functions.runTransactionQuery(`SELECT restaurant.id as restaurant_id, * FROM restaurant inner join
             user on restaurant.user_id = user.id WHERE email = "${req.body.email}"`, con)
+            console.log(restaurant)
             if (restaurant.length) {
               if(!restaurant.verified){
                 res.send({ statusCode: 405, message: "Your registration is still pending admin approval" });
