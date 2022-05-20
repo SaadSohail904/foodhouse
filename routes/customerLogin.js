@@ -51,11 +51,11 @@ router.post('/', async function (req, res, next) {
               let restaurant = await functions.runTransactionQuery(`SELECT *, restaurants.id as restaurant_id FROM restaurants inner join
               user on restaurants.user_id = user.id WHERE email = "${req.body.email}"`, con)
               if (restaurant.length) {
-                if(!restaurant.verified){
+                if(!restaurant[0].verified){
                   res.send({ statusCode: 405, message: "Your registration is still pending admin approval" });
   
                 }
-                if(!restaurant.payment_completed){
+                if(!restaurant[0].payment_completed){
                   res.send({ statusCode: 405, message: "Your payment is still pending" });
   
                 }
