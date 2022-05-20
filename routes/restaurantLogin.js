@@ -27,6 +27,14 @@ router.post('/', async function (req, res, next) {
             let restaurant = await functions.runTransactionQuery(`SELECT restaurant.id as restaurant_id, * FROM restaurant inner join
             user on restaurant.user_id = user.id WHERE email = "${req.body.email}"`, con)
             if (restaurant.length) {
+              if(!restaurant.verified){
+                res.send({ statusCode: 405, message: "Your registration is still pending admin approval" });
+
+              }
+              if(!restaurant.payment_completed){
+                res.send({ statusCode: 405, message: "Your payment is still pending" });
+
+              }
               let token = crypto.randomBytes(32).toString('hex');
               let expiry_time = 1000*60*60*24*7;
               restaurant[0].role = roles[1]
